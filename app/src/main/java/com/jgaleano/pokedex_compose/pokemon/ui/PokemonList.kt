@@ -20,12 +20,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.jgaleano.pokedex_compose.R
 import com.jgaleano.presentation.ui.theme.PokedexComposeTheme
 
 @Composable
-fun PokemonList() {
+fun PokemonList(
+    viewModel: PokemonListViewModel = hiltViewModel()
+) {
     val pokedex = listOf(
         Pair("Bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"),
         Pair("Ivysaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"),

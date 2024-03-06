@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.parcelize")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -66,9 +68,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    //implementation("com.google.dagger:hilt-android-compiler:2.50")
-    //implementation("com.google.dagger:hilt-navigation-compose:2.50")
+    implementation("com.google.dagger:hilt-android:2.51")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    ksp("com.google.dagger:hilt-compiler:2.51")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
