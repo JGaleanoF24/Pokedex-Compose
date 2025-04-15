@@ -3,13 +3,12 @@ package com.jgaleano.pokedex_compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.jgaleano.pokedex_compose.pokemon.ui.PokemonList
-import com.jgaleano.presentation.ui.theme.PokedexComposeTheme
+import com.jgaleano.presentation.theme.PokedexComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

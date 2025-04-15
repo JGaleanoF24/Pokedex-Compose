@@ -23,7 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.jgaleano.pokedex_compose.R
-import com.jgaleano.presentation.ui.theme.PokedexComposeTheme
+import com.jgaleano.presentation.theme.PokedexComposeTheme
+import com.jgaleano.presentation.ui.component.card.PokemonCard
 
 @Composable
 fun PokemonList(
@@ -51,45 +52,5 @@ fun PokemonList(
 
 @Composable
 private fun PokemonItem(pokemon: Pair<String, String>) {
-    Card(
-        modifier = Modifier.padding(6.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(14.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            if (pokemon.second.isNotEmpty()) {
-                AsyncImage(
-                    model = pokemon.second,
-                    contentDescription = pokemon.first
-                )
-            } else {
-                Image(
-                    modifier = Modifier.size(120.dp),
-                    alignment = Alignment.Center,
-                    painter = painterResource(id = R.drawable.images),
-                    contentDescription = "Bulbasaur image"
-                )
-            }
-            Text(
-                text = pokemon.first,
-                textAlign = TextAlign.Center
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PokemonPreview() {
-    PokedexComposeTheme {
-        PokemonItem(
-            Pair("Bulbasaur", "")
-        )
-    }
+    PokemonCard(name = pokemon.first, image = pokemon.second)
 }

@@ -1,4 +1,4 @@
-package com.jgaleano.presentation.ui.theme
+package com.jgaleano.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
