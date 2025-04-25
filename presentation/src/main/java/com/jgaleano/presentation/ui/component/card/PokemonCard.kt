@@ -1,7 +1,6 @@
 package com.jgaleano.presentation.ui.component.card
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,25 +14,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.jgaleano.presentation.R
+
 
 @Composable
 fun PokemonCard(
     image: String = "",
     name: String,
-    background: Color = Color.Transparent
+    backgroundColor: Color = Color.Black
 ) {
     Card(
         modifier = Modifier.padding(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors().copy(
-            containerColor = background
+            containerColor = backgroundColor
         )
     ) {
         Column(
@@ -45,20 +47,26 @@ fun PokemonCard(
         ) {
             if (image.isNotEmpty()) {
                 AsyncImage(
-                    model = image,
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(image)
+                        .crossfade(true)
+                        .allowHardware(false)
+                        .build(),
+                    placeholder = painterResource(id = R.drawable.placeholder),
                     contentDescription = name
                 )
             } else {
                 Image(
                     modifier = Modifier.size(120.dp),
                     alignment = Alignment.Center,
-                    painter = painterResource(id = R.drawable.images),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "Bulbasaur image"
                 )
             }
             Text(
                 text = name,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = Color.White
             )
         }
     }
@@ -66,9 +74,9 @@ fun PokemonCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun PokemonCardPreview() {
+private fun PokemonCardPlaceholderPreview() {
     PokemonCard(
         image = "",
-        name = "Bulbasaur"
+        name = "Pikachu"
     )
 }

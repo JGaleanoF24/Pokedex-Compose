@@ -1,56 +1,55 @@
 package com.jgaleano.pokedex_compose.pokemon.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import com.jgaleano.pokedex_compose.R
-import com.jgaleano.presentation.theme.PokedexComposeTheme
 import com.jgaleano.presentation.ui.component.card.PokemonCard
+import com.jgaleano.presentation.ui.state.PokedexUiState
 
 @Composable
 fun PokemonList(
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
-    val pokedex = listOf(
-        Pair("Bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png"),
-        Pair("Ivysaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png"),
-        Pair("Venusaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png"),
-        Pair("Charmander", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"),
-        Pair("Charmeleon", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png"),
-        Pair("Charizard", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"),
+    val pokedexUiState by viewModel.pokedexUiState.collectAsState()
 
-        )
-
-    LazyVerticalGrid(
-        modifier = Modifier.padding(6.dp),
-        columns = GridCells.Fixed(2)
-    ) {
-        items(pokedex) { pokemon ->
-            PokemonItem(pokemon)
+    when (val state = pokedexUiState) {
+        is PokedexUiState.Loading -> {
+            CircularProgressIndicator()
+        }
+        is PokedexUiState.Success -> {
+            LazyVerticalGrid(
+                modifier = Modifier.padding(6.dp),
+                columns = GridCells.Fixed(2)
+            ) {
+                items(state.data) { pokemon ->
+                    PokemonItem(pokemon)
+                }
+            }
+        }
+        is PokedexUiState.Error -> {
+            Text(state.error)
+        }
+        else -> {
+            CircularProgressIndicator()
         }
     }
 }
 
 @Composable
-private fun PokemonItem(pokemon: Pair<String, String>) {
-    PokemonCard(name = pokemon.first, image = pokemon.second)
+private fun PokemonItem(pokemon: Triple<String, String, Color>) {
+    PokemonCard(
+        name = pokemon.first,
+        image = pokemon.second,
+        backgroundColor = pokemon.third
+    )
 }
