@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.jgaleano.presentation.ui.component.card.PokemonCard
@@ -20,6 +19,7 @@ import com.jgaleano.presentation.ui.state.PokedexUiState
 fun PokemonList(
     viewModel: PokemonListViewModel = hiltViewModel()
 ) {
+    viewModel.getPokemonList()
     val pokedexUiState by viewModel.pokedexUiState.collectAsState()
 
     when (val state = pokedexUiState) {
@@ -39,17 +39,16 @@ fun PokemonList(
         is PokedexUiState.Error -> {
             Text(state.error)
         }
-        else -> {
-            CircularProgressIndicator()
+        is PokedexUiState.Empty -> {
+            Text(state.message)
         }
     }
 }
 
 @Composable
-private fun PokemonItem(pokemon: Triple<String, String, Color>) {
+private fun PokemonItem(pokemon: Pair<String, String>) {
     PokemonCard(
         name = pokemon.first,
-        image = pokemon.second,
-        backgroundColor = pokemon.third
+        image = pokemon.second
     )
 }

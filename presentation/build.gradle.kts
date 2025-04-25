@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.palette)
 
     // Coil
     implementation(libs.coil.compose)

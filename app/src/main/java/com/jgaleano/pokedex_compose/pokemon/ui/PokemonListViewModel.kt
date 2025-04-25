@@ -1,6 +1,5 @@
 package com.jgaleano.pokedex_compose.pokemon.ui
 
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jgaleano.presentation.ui.state.PokedexUiState
@@ -39,22 +38,13 @@ class PokemonListViewModel @Inject constructor() : ViewModel() {
             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png"
         )
     )
-    private val test = mutableListOf<Triple<String, String, Color>>()
 
-    private val _pokedexUiState = MutableStateFlow<PokedexUiState<List<Triple<String, String, Color>>>>(PokedexUiState.Loading)
+    private val _pokedexUiState = MutableStateFlow<PokedexUiState<List<Pair<String, String>>>>(PokedexUiState.Loading)
     val pokedexUiState = _pokedexUiState.asStateFlow()
 
-    fun updateBackground(
-        item: Pair<String, String>,
-        background: Color
-    ) {
+    fun getPokemonList() {
         viewModelScope.launch {
-            test.add(
-                Triple(item.first, item.second, background)
-            )
-            if (test.size == pokemonList.size) {
-                _pokedexUiState.value = PokedexUiState.Success(test.sortedBy { it.first })
-            }
+            _pokedexUiState.value = PokedexUiState.Success(pokemonList)
         }
     }
 }
