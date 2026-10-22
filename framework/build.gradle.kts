@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.com.google.devtools.ksp)
 }
 
 android {
@@ -33,19 +34,27 @@ android {
 }
 
 dependencies {
+    api(project(":data"))
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
 
-    // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.moshi)
+    // network
+    api(libs.retrofit)
+    api(libs.converter.moshi)
+    api(libs.sandwich.retrofit)
+    api(libs.moshi)
+    ksp(libs.moshi.kotlin.codegen)
 
-    // Sandwich
-    implementation(libs.sandwich.retrofit)
+    // database
+    api(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // preferences
+    api(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

@@ -40,18 +40,21 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-
-    // Compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.ui)
-    implementation(libs.ui.graphics)
-    implementation(libs.ui.tooling.preview)
-    implementation(libs.material3)
+    api(platform(libs.androidx.compose.bom))
+    api(libs.ui)
+    api(libs.ui.graphics)
+    api(libs.ui.tooling.preview)
+    api(libs.material3)
+    api(libs.androidx.lifecycle.viewmodel.compose)
+    api(libs.coil.compose)
+    implementation(libs.androidx.palette)
+    debugImplementation(libs.androidx.ui.tooling)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.turbine)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
